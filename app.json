@@ -1,12 +1,11 @@
 {
   "expo": {
-    "name": "react-native-chart-kit-example-2",
-    "slug": "react-native-chart-kit-example-2",
-    "privacy": "public",
-    "sdkVersion": "UNVERSIONED",
+    "name": "React Native Chart Kit Example",
+    "slug": "react-native-chart-kit-example",
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "web"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,7 +22,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.react-native-chart-kit-example"
+    },
+    "android": {
+      "package": "com.anonymous.reactnativechartkitexample"
+    },
+    "web": {
+      "bundler": "metro"
     }
   }
 }
