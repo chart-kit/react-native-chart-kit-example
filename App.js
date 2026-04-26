@@ -1,171 +1,235 @@
-import React from 'react'
-import { ScrollView, StatusBar, Dimensions, Text } from 'react-native'
-import ScrollableTabView from 'react-native-scrollable-tab-view'
+import React, { useMemo, useState } from "react";
 import {
-  LineChart,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {
   BarChart,
+  ContributionGraph,
+  LineChart,
   PieChart,
   ProgressChart,
-  ContributionGraph
-} from 'react-native-chart-kit'
-import { data, contributionData, pieChartData, progressChartData } from './data'
-import 'babel-polyfill'
+  StackedBarChart
+} from "react-native-chart-kit";
 
-// in Expo - swipe left to see the following styling, or create your own
-const chartConfigs = [
-  {
-    backgroundColor: '#000000',
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientTo: '#08130D',
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    style: {
-      borderRadius: 16
-    }
-  },
-  {
-    backgroundColor: '#022173',
-    backgroundGradientFrom: '#022173',
-    backgroundGradientTo: '#1b3fa0',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: {
-      borderRadius: 16
-    }
-  },
-  {
-    backgroundColor: '#ffffff',
-    backgroundGradientFrom: '#ffffff',
-    backgroundGradientTo: '#ffffff',
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`
-  },
-  {
-    backgroundColor: '#26872a',
-    backgroundGradientFrom: '#43a047',
-    backgroundGradientTo: '#66bb6a',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: {
-      borderRadius: 16
-    }
-  },
-  {
-    backgroundColor: '#000000',
-    backgroundGradientFrom: '#000000',
-    backgroundGradientTo: '#000000',
-    color: (opacity = 1) => `rgba(${255}, ${255}, ${255}, ${opacity})`
-  }, {
-    backgroundColor: '#0091EA',
-    backgroundGradientFrom: '#0091EA',
-    backgroundGradientTo: '#0091EA',
-    color: (opacity = 1) => `rgba(${255}, ${255}, ${255}, ${opacity})`
-  },
-  {
-    backgroundColor: '#e26a00',
-    backgroundGradientFrom: '#fb8c00',
-    backgroundGradientTo: '#ffa726',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: {
-      borderRadius: 16
-    }
-  },
-  {
-    backgroundColor: '#b90602',
-    backgroundGradientFrom: '#e53935',
-    backgroundGradientTo: '#ef5350',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    style: {
-      borderRadius: 16
-    }
-  },
-  {
-    backgroundColor: '#ff3e03',
-    backgroundGradientFrom: '#ff3e03',
-    backgroundGradientTo: '#ff3e03',
-    color: (opacity = 1) => `rgba(${0}, ${0}, ${0}, ${opacity})`
-  }
-]
+import {
+  barData,
+  contributionData,
+  data,
+  pieChartData,
+  progressChartData,
+  stackedBarGraphData
+} from "./data";
 
-export default class App extends React.Component {
-  renderTabBar() {
-    return <StatusBar hidden/>
+const chartConfig = {
+  backgroundColor: "#102b33",
+  backgroundGradientFrom: "#102b33",
+  backgroundGradientTo: "#1b6b7a",
+  decimalPlaces: 2,
+  color: (opacity = 1, index = 0) =>
+    [
+      `rgba(124, 92, 255, ${opacity})`,
+      `rgba(32, 214, 197, ${opacity})`,
+      `rgba(92, 209, 132, ${opacity})`
+    ][index % 3],
+  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  strokeWidth: 2,
+  barPercentage: 0.65,
+  propsForBackgroundLines: {
+    stroke: "rgba(255,255,255,0.18)",
+    strokeDasharray: "4 8"
+  },
+  propsForLabels: {
+    fontSize: 11
   }
-  render() {
-    const width = Dimensions.get('window').width
-    const height = 220
-    return (
-      <ScrollableTabView renderTabBar={this.renderTabBar}>
-        {chartConfigs.map(chartConfig => {
-          const labelStyle = {
-            color: chartConfig.color(),
-            marginVertical: 10,
-            textAlign: 'center',
-            fontSize: 16
-          }
-          const graphStyle = {
-            marginVertical: 8,
-            ...chartConfig.style
-          }
-          return (
-            <ScrollView
-              key={Math.random()}
-              style={{
-                backgroundColor: chartConfig.backgroundColor
-              }}
-            >
-              <Text style={labelStyle}>Bezier Line Chart</Text>
-              <LineChart
-                data={data}
-                width={width}
-                height={height}
-                chartConfig={chartConfig}
-                bezier
-                style={graphStyle}
-              />
-              <Text style={labelStyle}>Progress Chart</Text>
-              <ProgressChart
-                data={progressChartData}
-                width={width}
-                height={height}
-                chartConfig={chartConfig}
-                style={graphStyle}
-              />
-              <Text style={labelStyle}>Bar Graph</Text>
-              <BarChart
-                width={width}
-                height={height}
-                data={data}
-                chartConfig={chartConfig}
-                style={graphStyle}
-              />
-              <Text style={labelStyle}>Pie Chart</Text>
-              <PieChart
-                data={pieChartData}
-                height={height}
-                width={width}
-                chartConfig={chartConfig}
-                accessor="population"
-                style={graphStyle}
-              />
-              <Text style={labelStyle}>Line Chart</Text>
-              <LineChart
-                data={data}
-                width={width}
-                height={height}
-                chartConfig={chartConfig}
-                style={graphStyle}
-              />
-              <Text style={labelStyle}>Contribution Graph</Text>
-              <ContributionGraph
-                values={contributionData}
-                width={width}
-                height={height}
-                endDate={new Date('2016-05-01')}
-                numDays={105}
-                chartConfig={chartConfig}
-                style={graphStyle}
-              />
-            </ScrollView>
-          )
-        })}
-      </ScrollableTabView>
-    )
-  }
+};
+
+function ChartSection({ title, subtitle, children, message }) {
+  return (
+    <View style={styles.section}>
+      <View style={styles.sectionHeader}>
+        <View>
+          <Text style={styles.sectionTitle}>{title}</Text>
+          {subtitle ? <Text style={styles.sectionSubtitle}>{subtitle}</Text> : null}
+        </View>
+        {message ? <Text style={styles.sectionMessage}>{message}</Text> : null}
+      </View>
+      <View style={styles.chartWrap}>{children}</View>
+    </View>
+  );
 }
+
+export default function App() {
+  const { width: windowWidth } = useWindowDimensions();
+  const [selectedPoint, setSelectedPoint] = useState("Tap a line dot");
+  const [selectedDay, setSelectedDay] = useState("Tap a contribution day");
+
+  const chartWidth = Math.min(windowWidth - 32, 430);
+  const chartHeight = 220;
+  const graphStyle = useMemo(() => ({ borderRadius: 8 }), []);
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="dark" />
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.header}>
+            <Text style={styles.title}>React Native Chart Kit</Text>
+            <Text style={styles.subtitle}>Native validation app</Text>
+          </View>
+
+          <ChartSection
+            title="Bezier Line Chart"
+            subtitle="Dots, legends, gradients, and press handling"
+            message={selectedPoint}
+          >
+            <LineChart
+              bezier
+              data={data}
+              width={chartWidth}
+              height={chartHeight}
+              chartConfig={chartConfig}
+              style={graphStyle}
+              onDataPointClick={({ value, index }) =>
+                setSelectedPoint(`Point ${index + 1}: ${value}`)
+              }
+            />
+          </ChartSection>
+
+          <ChartSection title="Bar Chart" subtitle="Negative values and axis labels">
+            <BarChart
+              data={barData}
+              width={chartWidth}
+              height={chartHeight}
+              chartConfig={chartConfig}
+              yAxisLabel="$"
+              yAxisSuffix="k"
+              style={graphStyle}
+              showValuesOnTopOfBars
+            />
+          </ChartSection>
+
+          <ChartSection title="Progress Chart" subtitle="Rings and legend labels">
+            <ProgressChart
+              data={progressChartData}
+              width={chartWidth}
+              height={chartHeight}
+              chartConfig={chartConfig}
+              style={graphStyle}
+            />
+          </ChartSection>
+
+          <ChartSection title="Stacked Bar Chart" subtitle="Stacked segments and legend">
+            <StackedBarChart
+              data={stackedBarGraphData}
+              width={chartWidth}
+              height={chartHeight}
+              chartConfig={chartConfig}
+              style={graphStyle}
+              hideLegend={false}
+            />
+          </ChartSection>
+
+          <ChartSection title="Pie Chart" subtitle="Slices, labels, and legend layout">
+            <PieChart
+              data={pieChartData}
+              width={chartWidth}
+              height={chartHeight}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="#ffffff"
+              paddingLeft="12"
+              style={graphStyle}
+            />
+          </ChartSection>
+
+          <ChartSection
+            title="Contribution Graph"
+            subtitle="Calendar cells, gradients, and day presses"
+            message={selectedDay}
+          >
+            <ContributionGraph
+              values={contributionData}
+              width={chartWidth}
+              height={chartHeight}
+              endDate={new Date("2016-05-01")}
+              numDays={105}
+              chartConfig={chartConfig}
+              style={graphStyle}
+              onDayPress={value =>
+                setSelectedDay(
+                  `${value.date.toISOString().slice(0, 10)}: ${value.count}`
+                )
+              }
+            />
+          </ChartSection>
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#eef3f7"
+  },
+  content: {
+    padding: 16,
+    gap: 16
+  },
+  header: {
+    paddingTop: 8,
+    paddingBottom: 4
+  },
+  title: {
+    color: "#17232c",
+    fontSize: 28,
+    fontWeight: "800"
+  },
+  subtitle: {
+    color: "#586775",
+    fontSize: 15,
+    marginTop: 4
+  },
+  section: {
+    backgroundColor: "#ffffff",
+    borderColor: "#d8e0e7",
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: "hidden"
+  },
+  sectionHeader: {
+    alignItems: "flex-start",
+    borderBottomColor: "#e6edf3",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    gap: 8,
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 14
+  },
+  sectionTitle: {
+    color: "#17232c",
+    fontSize: 16,
+    fontWeight: "700"
+  },
+  sectionSubtitle: {
+    color: "#657482",
+    fontSize: 12,
+    marginTop: 3
+  },
+  sectionMessage: {
+    color: "#116275",
+    fontSize: 12,
+    fontWeight: "700"
+  },
+  chartWrap: {
+    alignItems: "center",
+    paddingVertical: 14
+  }
+});
