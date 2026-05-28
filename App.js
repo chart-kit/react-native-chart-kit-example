@@ -771,7 +771,6 @@ export default function App() {
           <ScrollView contentContainerStyle={styles.content}>
             <View style={styles.header}>
               <Text style={styles.title}>React Native Chart Kit</Text>
-              <Text style={styles.subtitle}>next branch validation app</Text>
             </View>
             <PageTabs activePage={activePage} onChange={setActivePage} />
             {pageContent}
@@ -799,11 +798,6 @@ const styles = StyleSheet.create({
     color: "#17232c",
     fontSize: 28,
     fontWeight: "800",
-  },
-  subtitle: {
-    color: "#586775",
-    fontSize: 15,
-    marginTop: 4,
   },
   tabs: {
     backgroundColor: "#dfe8ef",
