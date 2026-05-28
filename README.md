@@ -2,10 +2,12 @@
 
 Expo validation app for `react-native-chart-kit`.
 
-This app uses the published npm package:
+This app is currently pointed at the sibling `react-native-chart-kit` checkout so
+it can validate the `next` branch and the public `/v2` import path before a
+release:
 
 ```sh
-react-native-chart-kit@^6.12.1
+react-native-chart-kit@file:../react-native-chart-kit
 ```
 
 ## Run
