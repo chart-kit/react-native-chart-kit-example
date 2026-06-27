@@ -19,7 +19,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ChartKitProvider as ProChartKitProvider } from "@chart-kit/pro/react-native";
 
-import { styles } from "./src/appStyles";
+import { styles } from "./src/showcase/appStyles";
 import {
   ShowcaseMode,
   ShowcasePage,
@@ -30,22 +30,22 @@ import {
   showcaseModes,
   stories,
   storyFeatureTags,
-} from "./src/storyRegistry";
+} from "./src/showcase/registry";
 import {
   showcaseCustomPresets,
   showcasePresetOptions,
   type ShowcasePresetId,
   type ShowcaseThemeMode,
-} from "./src/showcaseTheme";
-import { ShowcaseMenu } from "./src/ShowcaseMenu";
-import { TouchTraceSurface } from "./src/TouchTraceSurface";
+} from "./src/showcase/theme";
+import { ShowcaseMenu } from "./src/showcase/ShowcaseMenu";
+import { TouchTraceSurface } from "./src/showcase/TouchTraceSurface";
 import {
   getPresetFromParams,
   getShowcaseSearchParamsFromBuildEnv,
   getShowcaseSearchParamsFromUrl,
   getThemeModeFromParams,
   type ShowcaseSearchParams,
-} from "./src/showcaseNavigation";
+} from "./src/showcase/navigation";
 
 const defaultStory =
   stories.find((story) => story.id === "v2-basic") ?? stories[0];
@@ -126,12 +126,15 @@ const createPreviewSkiaFontResolver = (
   fontManager: PreviewSkiaFontManager,
 ): PreviewSkiaFontResolver => {
   const skiaWithFontMatching = SkiaModule as typeof SkiaModule & {
-    matchFont?: (style?: {
-      fontFamily?: string;
-      fontSize?: number;
-      fontStyle?: "normal";
-      fontWeight?: "normal";
-    }, fontManager?: PreviewSkiaFontManager) => unknown;
+    matchFont?: (
+      style?: {
+        fontFamily?: string;
+        fontSize?: number;
+        fontStyle?: "normal";
+        fontWeight?: "normal";
+      },
+      fontManager?: PreviewSkiaFontManager,
+    ) => unknown;
   };
   const fontsBySize = new Map<number, PreviewSkiaFont | undefined>();
   const fontFamilies = previewSkiaFontFamilies;
@@ -150,12 +153,15 @@ const createPreviewSkiaFontResolver = (
 
     for (const fontFamily of fontFamilies) {
       try {
-        const matchedFont = skiaWithFontMatching.matchFont?.({
-          fontFamily,
-          fontSize,
-          fontStyle: "normal",
-          fontWeight: "normal",
-        }, fontManager) as PreviewSkiaFont | undefined;
+        const matchedFont = skiaWithFontMatching.matchFont?.(
+          {
+            fontFamily,
+            fontSize,
+            fontStyle: "normal",
+            fontWeight: "normal",
+          },
+          fontManager,
+        ) as PreviewSkiaFont | undefined;
 
         if (isUsableFont(matchedFont)) {
           fontsBySize.set(fontSize, matchedFont);
@@ -170,10 +176,7 @@ const createPreviewSkiaFontResolver = (
     try {
       const font = SkiaModule.Skia.Font(undefined, fontSize) as PreviewSkiaFont;
 
-      fontsBySize.set(
-        fontSize,
-        isUsableFont(font) ? font : undefined,
-      );
+      fontsBySize.set(fontSize, isUsableFont(font) ? font : undefined);
 
       return fontsBySize.get(fontSize);
     } catch {
@@ -560,9 +563,9 @@ export default function App() {
         ? isDarkApp
           ? "light-content"
           : "dark-content"
-      : isLightTakeover
-        ? "dark-content"
-        : "light-content";
+        : isLightTakeover
+          ? "dark-content"
+          : "light-content";
 
     return (
       <GestureHandlerRootView style={styles.gestureRoot}>
@@ -682,7 +685,7 @@ export default function App() {
                                 { borderTopColor: appTheme.grid },
                                 isExportDemoPage && {
                                   borderTopWidth: 0,
-                                  paddingTop: 0
+                                  paddingTop: 0,
                                 },
                                 { width: storyBlockWidth },
                               ]}

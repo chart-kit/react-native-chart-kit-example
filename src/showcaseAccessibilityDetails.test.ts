@@ -15,17 +15,17 @@ const { makeDataTable } = vi.hoisted(() => ({
         index: 0,
         label: "Sample",
         percentageLabel: "50%",
-        xLabel: "Sample"
-      }
-    ]
-  })
+        xLabel: "Sample",
+      },
+    ],
+  }),
 }));
 
 vi.mock("react-native", () => ({
   Pressable: () => null,
   StyleSheet: { create: (styles: unknown) => styles },
   Text: () => null,
-  View: () => null
+  View: () => null,
 }));
 
 vi.mock("@chart-kit/svg-renderer", () => {
@@ -35,7 +35,7 @@ vi.mock("@chart-kit/svg-renderer", () => {
     SvgCircle: MockPrimitive,
     SvgLine: MockPrimitive,
     SvgRect: MockPrimitive,
-    SvgText: MockPrimitive
+    SvgText: MockPrimitive,
   };
 });
 
@@ -52,23 +52,26 @@ vi.mock("react-native-chart-kit/v2", () => ({
   getLineChartDataTable: makeDataTable,
   getPieChartDataTable: makeDataTable,
   getProgressChartDataTable: makeDataTable,
-  useChartKitTheme: () => ({ mode: "light" })
+  useChartKitTheme: () => ({ mode: "light" }),
 }));
 
-import { publicChartMode } from "./publicChartMode";
-import { barOverviewStories } from "./stories/barOverviewStories";
-import { contributionOverviewStories } from "./stories/contributionOverviewStories";
-import { lineOverviewStories } from "./stories/lineOverviewStories";
-import { pieOverviewStories } from "./stories/pieOverviewStories";
-import { progressOverviewStories } from "./stories/progressOverviewStories";
-import type { ShowcasePage, ShowcaseStory } from "./stories/storyPrimitives";
+import { publicChartMode } from "./showcase/registry/publicChartMode";
+import { barOverviewStories } from "./examples/bar-chart";
+import { contributionOverviewStories } from "./examples/contribution-heatmap";
+import { lineOverviewStories } from "./examples/line-chart/overview";
+import { pieOverviewStories } from "./examples/pie-donut-chart";
+import { progressOverviewStories } from "./examples/progress-chart";
+import type {
+  ShowcasePage,
+  ShowcaseStory,
+} from "./showcase/shared/storyPrimitives";
 
 const pagesRequiringTableFallback = [
   "line-charts",
   "bar-charts",
   "pie-donut",
   "progress",
-  "heatmaps"
+  "heatmaps",
 ];
 
 const storiesWithAccessibilityDetails: ShowcaseStory[] = [
@@ -76,7 +79,7 @@ const storiesWithAccessibilityDetails: ShowcaseStory[] = [
   ...barOverviewStories,
   ...pieOverviewStories,
   ...progressOverviewStories,
-  ...contributionOverviewStories
+  ...contributionOverviewStories,
 ];
 
 const getPageStoryIds = (page: ShowcasePage) =>
@@ -88,7 +91,7 @@ describe("showcase accessibility data details", () => {
       const page = publicChartMode.pages.find((item) => item.id === pageId);
       expect(
         page,
-        `${pageId} should be part of the public chart mode`
+        `${pageId} should be part of the public chart mode`,
       ).toBeDefined();
 
       if (!page) {
@@ -96,12 +99,12 @@ describe("showcase accessibility data details", () => {
       }
 
       const pageStories = getPageStoryIds(page).map((storyId) =>
-        storiesWithAccessibilityDetails.find((story) => story.id === storyId)
+        storiesWithAccessibilityDetails.find((story) => story.id === storyId),
       );
 
       expect(
         pageStories.some((story) => story?.Details !== undefined),
-        `${pageId} should expose at least one collapsed data details panel`
+        `${pageId} should expose at least one collapsed data details panel`,
       ).toBe(true);
     }
   });

@@ -5,13 +5,13 @@ import {
   getPresetFromParams,
   getShowcaseSearchParamsFromBuildEnv,
   getShowcaseSearchParamsFromUrl,
-  getThemeModeFromParams
-} from "./showcaseNavigation";
+  getThemeModeFromParams,
+} from "./showcase/navigation";
 
 describe("showcase navigation helpers", () => {
   it("parses web and native deep-link query params", () => {
     const params = getShowcaseSearchParamsFromUrl(
-      "chartkitshowcase://showcase?page=bar-charts&theme=dark&preset=studio"
+      "chartkitshowcase://showcase?page=bar-charts&theme=dark&preset=studio",
     );
 
     expect(params?.get("page")).toBe("bar-charts");
@@ -21,7 +21,7 @@ describe("showcase navigation helpers", () => {
 
   it("decodes query values without relying on URL globals", () => {
     const params = createShowcaseSearchParams(
-      "?story=v2-selected-tooltip&note=Line+Charts%20QA"
+      "?story=v2-selected-tooltip&note=Line+Charts%20QA",
     );
 
     expect(params.get("story")).toBe("v2-selected-tooltip");
@@ -31,7 +31,7 @@ describe("showcase navigation helpers", () => {
   it("parses build-time QA query params for native launch automation", () => {
     const params = getShowcaseSearchParamsFromBuildEnv({
       EXPO_PUBLIC_CHARTKIT_SHOWCASE_QA_QUERY:
-        "view=charts&page=bar&theme=dark&preset=spectrum"
+        "view=charts&page=bar&theme=dark&preset=spectrum",
     });
 
     expect(params?.get("view")).toBe("charts");
@@ -64,7 +64,7 @@ describe("showcase navigation helpers", () => {
   it("parses full URLs from the build-time QA query env var", () => {
     const params = getShowcaseSearchParamsFromBuildEnv({
       EXPO_PUBLIC_CHARTKIT_SHOWCASE_QA_QUERY:
-        "chartkitshowcase://showcase?story=v2-range-selector"
+        "chartkitshowcase://showcase?story=v2-range-selector",
     });
 
     expect(params?.get("story")).toBe("v2-range-selector");
@@ -72,7 +72,7 @@ describe("showcase navigation helpers", () => {
 
   it("falls back to safe preview defaults for unsupported values", () => {
     const params = createShowcaseSearchParams(
-      "?theme=system&preset=unsupported"
+      "?theme=system&preset=unsupported",
     );
 
     expect(getThemeModeFromParams(params)).toBe("light");
@@ -81,13 +81,13 @@ describe("showcase navigation helpers", () => {
 
   it("does not preserve removed alpha preset names", () => {
     expect(
-      getPresetFromParams(createShowcaseSearchParams("?preset=analytics"))
+      getPresetFromParams(createShowcaseSearchParams("?preset=analytics")),
     ).toBe("default");
     expect(
-      getPresetFromParams(createShowcaseSearchParams("?preset=dark-fintech"))
+      getPresetFromParams(createShowcaseSearchParams("?preset=dark-fintech")),
     ).toBe("default");
     expect(
-      getPresetFromParams(createShowcaseSearchParams("?preset=high-contrast"))
+      getPresetFromParams(createShowcaseSearchParams("?preset=high-contrast")),
     ).toBe("default");
   });
 });

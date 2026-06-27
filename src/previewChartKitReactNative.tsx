@@ -6,17 +6,17 @@ import {
   type CandlestickChartProps,
   type CandlestickChartRangeSelectorConfig,
   type CandlestickChartSelectEvent,
-  type CandlestickChartViewportInteractionConfig
+  type CandlestickChartViewportInteractionConfig,
 } from "@chart-kit/pro";
 
-import { useTouchTrace } from "./TouchTraceSurface";
+import { useTouchTrace } from "./showcase/TouchTraceSurface";
 
 export * from "@chart-kit/pro";
 
 const tracePointId = "candlestick-crosshair";
 
 export const CandlestickChart = <TData extends Record<string, unknown>>(
-  props: CandlestickChartProps<TData>
+  props: CandlestickChartProps<TData>,
 ) => {
   const touchTrace = useTouchTrace();
   const { interaction, rangeSelector, viewportInteraction } = props;
@@ -27,11 +27,11 @@ export const CandlestickChart = <TData extends Record<string, unknown>>(
         touchTrace.setTracePoint({
           id: tracePointId,
           x: event.pointer.page.x,
-          y: event.pointer.page.y
+          y: event.pointer.page.y,
         });
       }
     },
-    [touchTrace]
+    [touchTrace],
   );
   const traceEnd = useCallback(() => {
     touchTrace.scheduleClearTrace();
@@ -53,7 +53,7 @@ export const CandlestickChart = <TData extends Record<string, unknown>>(
       onSelect: (event: CandlestickChartSelectEvent<TData>) => {
         traceSelect(event);
         config.onSelect?.(event);
-      }
+      },
     };
   }, [interaction, touchTrace.enabled, traceEnd, traceSelect]);
 
@@ -67,11 +67,11 @@ export const CandlestickChart = <TData extends Record<string, unknown>>(
     return {
       ...config,
       onGestureEnd: (
-        event: Parameters<NonNullable<typeof config.onGestureEnd>>[0]
+        event: Parameters<NonNullable<typeof config.onGestureEnd>>[0],
       ) => {
         config.onGestureEnd?.(event);
         traceEnd();
-      }
+      },
     };
   }, [rangeSelector, touchTrace.enabled, traceEnd]);
 
@@ -86,11 +86,11 @@ export const CandlestickChart = <TData extends Record<string, unknown>>(
     return {
       ...config,
       onGestureEnd: (
-        event: Parameters<NonNullable<typeof config.onGestureEnd>>[0]
+        event: Parameters<NonNullable<typeof config.onGestureEnd>>[0],
       ) => {
         config.onGestureEnd?.(event);
         traceEnd();
-      }
+      },
     };
   }, [viewportInteraction, touchTrace.enabled, traceEnd]);
 
