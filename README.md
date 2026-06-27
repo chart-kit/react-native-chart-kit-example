@@ -5,7 +5,7 @@ Expo validation app for `react-native-chart-kit`.
 This app uses the published npm package:
 
 ```sh
-react-native-chart-kit@^6.12.1
+react-native-chart-kit@^6.12.3
 ```
 
 ## Run
