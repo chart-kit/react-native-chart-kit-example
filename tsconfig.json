@@ -1,0 +1,54 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "noErrorTruncation": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "types": [
+      "node",
+      "react",
+      "react-native"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@chart-kit/core": [
+        "../react-native-chart-kit/packages/core/src/index.ts"
+      ],
+      "@chart-kit/pro/react-native": [
+        "src/previewChartKitReactNative.tsx"
+      ],
+      "@chart-kit/svg-renderer": [
+        "../react-native-chart-kit/packages/svg-renderer/src/index.ts"
+      ],
+      "react-native-chart-kit": [
+        "../react-native-chart-kit/src/index.ts"
+      ],
+      "react-native-chart-kit/v2": [
+        "../react-native-chart-kit/packages/react-native/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "App.tsx",
+    "src/**/*",
+    "visual/**/*",
+    "benchmarks/**/*",
+    "benchmark.config.ts",
+    "playwright.config.ts",
+    "vitest.config.ts"
+  ]
+}

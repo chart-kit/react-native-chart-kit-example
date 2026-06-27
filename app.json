@@ -1,35 +1,21 @@
 {
   "expo": {
-    "name": "React Native Chart Kit Example",
-    "slug": "react-native-chart-kit-example",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "name": "Chart Kit Pro Preview",
+    "slug": "chart-kit-pro-preview",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "scheme": "chartkitpropreview",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.react-native-chart-kit-example"
+      "bundleIdentifier": "io.chartkit.propreview"
     },
     "android": {
-      "package": "com.anonymous.reactnativechartkitexample"
+      "edgeToEdgeEnabled": true,
+      "package": "io.chartkit.propreview"
     },
-    "web": {
-      "bundler": "metro"
-    }
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

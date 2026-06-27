@@ -1,34 +1,33 @@
-# React Native Chart Kit Example
+# Chart Kit Pro Preview
 
-Expo validation app for `react-native-chart-kit`.
+Expo app for reviewing free `react-native-chart-kit/v2` charts and
+`@chart-kit/pro/react-native` charts together.
 
-This app is currently pointed at the sibling `react-native-chart-kit` checkout so
-it can validate the `next` branch and the public `/v2` import path before a
-release:
-
-```sh
-react-native-chart-kit@file:../react-native-chart-kit
-```
+This app intentionally tracks Expo SDK 54 for broad Expo Go compatibility during visual review.
+It expects a sibling `../react-native-chart-kit` checkout on the public `next`
+branch so the preview uses current `react-native-chart-kit/v2` source.
 
 ## Run
 
-```sh
+```bash
 npm install
 npm start
-npm run ios
-npm run android
-npm run android:build
-npm run web
 ```
 
-`npm start` runs the managed Expo preview. `npm run ios` and `npm run android`
-generate native projects and run local native builds, so they require Xcode or an
-Android SDK/JDK toolchain.
+Then scan the QR code with Expo Go while your computer and phone are on the same network.
+If Expo Go does not discover the LAN server, use tunnel mode:
 
-`npm run android:build` runs an Android APK build without launching a device. It
-patches the generated Gradle wrapper to 8.14.3 because the React Native 0.83
-template currently generates Gradle 9 while its Foojay toolchain resolver still
-targets Gradle 8.
+```bash
+npm start -- --tunnel
+```
 
-Use this app after chart-kit releases to verify native rendering, gradients,
-touch handlers, and layout on iOS and Android.
+Useful commands:
+
+```bash
+npm run typecheck
+npm run start -- --clear
+npm test
+npm run android
+npm run ios
+npm run web:build
+```

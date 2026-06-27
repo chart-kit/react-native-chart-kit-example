@@ -1,33 +1,47 @@
 {
-  "name": "react-native-chart-kit-example",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@chart-kit/pro-preview",
+  "version": "7.0.0-next.3",
+  "private": true,
+  "main": "index",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
-    "android:build": "expo prebuild --platform android --no-install && node scripts/use-gradle-8.js && cd android && ./gradlew assembleDebug",
     "ios": "expo run:ios",
-    "web": "expo start --web",
-    "check": "expo install --check"
+    "skia:web": "setup-skia-web public",
+    "web": "npm run skia:web --silent && expo start --web",
+    "web:build": "npm run skia:web --silent && expo export --platform web --output-dir dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~6.1.2",
-    "expo": "~54.0.26",
-    "expo-status-bar": "~3.0.9",
-    "lodash": "^4.18.1",
-    "paths-js": "^0.4.11",
-    "point-in-polygon": "^1.1.0",
+    "@chart-kit/core": "7.0.0-next.2",
+    "@chart-kit/pro": "7.0.0-next.3",
+    "@chart-kit/skia-renderer": "7.0.0-next.3",
+    "@chart-kit/svg-renderer": "7.0.0-next.2",
+    "@expo/metro-config": "^54.0.0",
+    "@expo/vector-icons": "^15.1.1",
+    "@shopify/react-native-skia": "2.2.12",
+    "expo": "^54.0.0",
+    "expo-dev-client": "~6.0.21",
+    "expo-font": "~14.0.12",
+    "expo-glass-effect": "~0.1.10",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-chart-kit": "file:../react-native-chart-kit",
-    "react-native-safe-area-context": "~5.6.2",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-reanimated": "~4.1.1",
     "react-native-svg": "15.12.1",
-    "react-native-web": "^0.21.2"
+    "react-native-view-shot": "5.1.0",
+    "react-native-web": "0.21.0",
+    "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "babel-preset-expo": "^54.0.7"
-  },
-  "private": true
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "vitest": "^4.1.5",
+    "typescript": "^5.9.3"
+  }
 }
