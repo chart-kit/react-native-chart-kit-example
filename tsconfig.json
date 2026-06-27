@@ -25,20 +25,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@chart-kit/core": [
-        "../react-native-chart-kit/packages/core/src/index.ts"
-      ],
       "@chart-kit/pro/react-native": [
         "src/previewChartKitReactNative.tsx"
-      ],
-      "@chart-kit/svg-renderer": [
-        "../react-native-chart-kit/packages/svg-renderer/src/index.ts"
-      ],
-      "react-native-chart-kit": [
-        "../react-native-chart-kit/src/index.ts"
-      ],
-      "react-native-chart-kit/v2": [
-        "../react-native-chart-kit/packages/react-native/src/index.ts"
       ]
     }
   },

@@ -4,8 +4,8 @@ Expo app for reviewing free `react-native-chart-kit/v2` charts and
 `@chart-kit/pro/react-native` charts together.
 
 This app intentionally tracks Expo SDK 54 for broad Expo Go compatibility during visual review.
-It expects a sibling `../react-native-chart-kit` checkout on the public `next`
-branch so the preview uses current `react-native-chart-kit/v2` source.
+It uses the published `react-native-chart-kit` next package for public chart
+previews.
 
 ## Run
 

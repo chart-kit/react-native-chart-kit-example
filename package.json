@@ -14,10 +14,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@chart-kit/core": "7.0.0-next.2",
+    "@chart-kit/core": "7.0.0-next.3",
     "@chart-kit/pro": "7.0.0-next.3",
     "@chart-kit/skia-renderer": "7.0.0-next.3",
-    "@chart-kit/svg-renderer": "7.0.0-next.2",
+    "@chart-kit/svg-renderer": "7.0.0-next.3",
     "@expo/metro-config": "^54.0.0",
     "@expo/vector-icons": "^15.1.1",
     "@shopify/react-native-skia": "2.2.12",
@@ -28,7 +28,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-chart-kit": "file:../react-native-chart-kit",
+    "react-native-chart-kit": "7.0.0-next.3",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-reanimated": "~4.1.1",
     "react-native-svg": "15.12.1",
@@ -41,7 +41,7 @@
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
-    "vitest": "^4.1.5",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.5"
   }
 }
